@@ -61,8 +61,14 @@ ps2_keyboard my_keyboard(
 );
 
 seg my_seg(
-    .clk(clk),
-    .rst(rst),
+    .num0(0),
+    .num1(10),
+    .num2(10),
+    .num3(10),
+    .num4(10),
+    .num5(10),
+    .num6(10),
+    .num7(10), 
     .o_seg0(seg0),
     .o_seg1(seg1),
     .o_seg2(seg2),
