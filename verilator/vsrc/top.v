@@ -1,18 +1,22 @@
-module top(x,en,y);
-  input  [1:0] x;
-  input  en;
-  output reg [3:0]y;
+module top(
+    input  [3:0] x,
+    input  [3:0] y,
+    input op,
+    output [3:0] out
+);
 
-  always @(x or en)
-    if (en)
-    begin
-      case (x)
-            2'd0 : y = 4'b0001;
-            2'd1 : y = 4'b0010;
-            2'd2 : y = 4'b0100;
-            2'd3 : y = 4'b1000;
-      endcase
-    end
-    else  y = 4'b0000;
+    wire [3:0] and_out, or_out;    
+
+    and4 my_and(
+        .x(x),
+        .y(y),
+        .out(and_out)
+    );
+    or4 my_or(
+        .x(x),
+        .y(y),
+        .out(or_out)
+    );
+    assign out = op ? and_out : or_out;
 
 endmodule

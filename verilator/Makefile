@@ -1,17 +1,19 @@
-VERILATOR = /usr/local/bin/verilator
+VERILATOR = verilator
+
+MODULE = top
 
 CSRCS = $(wildcard csrc/*.cpp)
 VSRCS = $(wildcard vsrc/*.v)
 
-obj_dir/Vtop: $(CSRCS) $(VSRCS)
-	$(VERILATOR) vsrc/top.v -exe csrc/test.cpp --cc --trace
-	make -C obj_dir -f Vtop.mk
+obj_dir/V$(MODULE): $(CSRCS) $(VSRCS)
+	$(VERILATOR) $(VSRCS) --top $(MODULE) -exe csrc/$(MODULE).cpp --cc --trace
+	make -C obj_dir -f V$(MODULE).mk
 
-waveform.vcd: obj_dir/Vtop
-	./obj_dir/Vtop
+waveform.vcd: obj_dir/V$(MODULE)
+	./obj_dir/V$(MODULE)
 
-sim: obj_dir/Vtop
-	./obj_dir/Vtop
+sim: obj_dir/V$(MODULE)
+	./obj_dir/V$(MODULE)
 
 wave: waveform.vcd
 	gtkwave waveform.vcd
